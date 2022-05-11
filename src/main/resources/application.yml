@@ -1,0 +1,35 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    password: root
+    username: root
+#    url: postgres://postgres:postgres@flatty-postgresql-dev.cadd8wnxmivk.eu-central-1.rds.amazonaws.com:5432/pasha
+    url: jdbc:postgresql://localhost:5433/root
+    driverClassName: org.postgresql.Driver
+    hikari:
+      schema: killer
+  flyway:
+#    url: postgres://postgres:postgres@flatty-postgresql-dev.cadd8wnxmivk.eu-central-1.rds.amazonaws.com:5432/pasha
+    user: root
+    password: root
+    schemas: killer
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+    show-sql: true
+  redis:
+    host: localhost
+    port: 6379
+    password: ""
+
+jwt:
+  key: DEV-JWT-SIGN-KEY_DEV-JWT-SIGN-KEY_DEV-JWT-SIGN-KEY_DEV-JWT-SIGN-KEY
+  token-header: Authorization
+  token-prefix: "Bearer "
+  token-issuer: Udaloi
+
+authorization:
+  authorized-users-count: 1

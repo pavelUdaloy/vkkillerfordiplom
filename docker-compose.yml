@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+      - POSTGRES_DB=killer
+    ports:
+      - "5433:5432"
+  redis:
+    image: redis:6.2.6-alpine
+    restart: always
+    container_name: redis-server
+    ports:
+      - "6379:6379"
+
+# todo если докер не стартует - sudo dockerd
+
+# todo docker run -p 6379:6379 --rm --name dRedis redis:6.2.6-alpine
+
+# todo docker run --name killer -p 5433:5432 -e POSTGRES_DATABASE=killer -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:13.3
