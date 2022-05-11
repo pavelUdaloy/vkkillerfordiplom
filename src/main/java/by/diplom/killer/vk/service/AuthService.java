@@ -7,16 +7,17 @@ import by.diplom.killer.vk.entity.User;
 import by.diplom.killer.vk.entity.token.RefreshTokenEntity;
 import by.diplom.killer.vk.exception.BaseKillerException;
 import by.diplom.killer.vk.security.TokenBody;
+import by.diplom.killer.vk.service.jwt.AuthTokenService;
+import by.diplom.killer.vk.service.jwt.RefreshTokenService;
+import by.diplom.killer.vk.service.jwt.UserJwtTokenService;
 import by.diplom.killer.vk.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class AuthService {
 
@@ -26,6 +27,7 @@ public class AuthService {
     private final RefreshTokenService refreshTokenService;
     private final AuthTokenService authTokenService;
 
+    @Transactional
     public AuthedUserDto loginUser(AuthDto authDto) {
         User user = userService.verifyUser(authDto.getEmail(), authDto.getPassword());
         String accessToken = userJwtTokenService.createAccessToken(user.getEmail());
@@ -46,6 +48,7 @@ public class AuthService {
      * @param oldRefreshToken old refresh token. Required to get token id
      * @return new tokens(access and refresh) with user data
      */
+    @Transactional
     public AuthedUserDto reLoginUser(String oldRefreshToken) {
         RefreshTokenEntity refreshTokenEntity = refreshTokenService.retrieveByToken(oldRefreshToken);
         User user = refreshTokenEntity.getUser();
@@ -66,6 +69,7 @@ public class AuthService {
      *
      * @param accessToken old access token. Required to get token id
      */
+    @Transactional
     public void logoutUser(String accessToken) {
         Long tokenId = authTokenService.getIdByToken(accessToken);
         TokenBody tokenBody = parseAccessToken(accessToken);
@@ -80,6 +84,7 @@ public class AuthService {
      * @param oldAccessToken old access token. Required to get token id
      * @return new tokens(access and refresh)
      */
+    @Transactional
     public UserTokenDto refreshTokensByAccess(String oldAccessToken) {
         Long tokenId = authTokenService.getIdByToken(oldAccessToken);
         TokenBody tokenBody = parseAccessToken(oldAccessToken);

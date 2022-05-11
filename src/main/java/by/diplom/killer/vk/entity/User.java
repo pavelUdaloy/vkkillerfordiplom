@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,23 +39,13 @@ public class User {
     private String lastName;
     private LocalDate birthDate;
 
-    @ManyToMany
-    @JoinTable(
-            name = "users_groups_subs",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id")
-    )
+    @ManyToMany(mappedBy = "subscribers", fetch = FetchType.LAZY)
     private Set<Group> groupsBySubscription;
 
-    @ManyToMany
-    @JoinTable(
-            name = "users_chats",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_id")
-    )
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Set<Chat> chats;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_tags_blocks",
             joinColumns = @JoinColumn(name = "user_id"),

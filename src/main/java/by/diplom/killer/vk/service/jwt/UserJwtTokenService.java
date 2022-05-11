@@ -1,4 +1,4 @@
-package by.diplom.killer.vk.service;
+package by.diplom.killer.vk.service.jwt;
 
 import by.diplom.killer.vk.config.JwtProperties;
 import by.diplom.killer.vk.security.SecurityAccountType;

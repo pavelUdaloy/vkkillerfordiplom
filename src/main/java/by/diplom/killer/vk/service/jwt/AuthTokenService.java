@@ -1,4 +1,4 @@
-package by.diplom.killer.vk.service;
+package by.diplom.killer.vk.service.jwt;
 
 import by.diplom.killer.vk.config.AuthorizationProperties;
 import by.diplom.killer.vk.entity.token.AuthTokenEntity;

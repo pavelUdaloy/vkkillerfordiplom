@@ -1,8 +1,7 @@
 package by.diplom.killer.vk.config;
 
-import by.diplom.killer.vk.repository.redis.AuthTokenRepository;
 import by.diplom.killer.vk.security.JwtAuthenticationFilter;
-import by.diplom.killer.vk.service.UserJwtTokenService;
+import by.diplom.killer.vk.service.jwt.UserJwtTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

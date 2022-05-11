@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,9 +28,9 @@ public class Tag {
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "blockedTags")
+    @ManyToMany(mappedBy = "blockedTags", fetch = FetchType.LAZY)
     private Set<User> usersThatBlockedContentByThisTag;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     private Set<Group> groupsThatExistsContentWithThisTag;
 }

@@ -1,11 +1,8 @@
 package by.diplom.killer.vk.security;
 
 import by.diplom.killer.vk.config.JwtProperties;
-import by.diplom.killer.vk.entity.token.AuthTokenEntity;
 import by.diplom.killer.vk.exception.BaseKillerException;
-import by.diplom.killer.vk.repository.redis.AuthTokenRepository;
-import by.diplom.killer.vk.service.AuthTokenService;
-import by.diplom.killer.vk.service.UserJwtTokenService;
+import by.diplom.killer.vk.service.jwt.UserJwtTokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

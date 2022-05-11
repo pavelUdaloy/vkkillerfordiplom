@@ -9,8 +9,8 @@ import by.diplom.killer.vk.repository.UserRepository;
 import by.diplom.killer.vk.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -34,11 +34,23 @@ public class UserService {
         return userMapper.mapUserToRegisteredUserDto(user);
     }
 
+    @Transactional(readOnly = true)
     public User getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
 
         if (user.isEmpty()) {
             throw new NotFoundException(String.format("User with email={%s}", email));
+        }
+
+        return user.get();
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new NotFoundException(String.format("User with id={%s}", id));
         }
 
         return user.get();

@@ -1,10 +1,10 @@
 package by.diplom.killer.vk.controller.http;
 
+import by.diplom.killer.vk.config.JwtProperties;
 import by.diplom.killer.vk.controller.http.entity.AuthDto;
 import by.diplom.killer.vk.controller.http.entity.AuthedUserDto;
 import by.diplom.killer.vk.controller.http.entity.UserDto;
 import by.diplom.killer.vk.controller.http.entity.UserTokenDto;
-import by.diplom.killer.vk.config.JwtProperties;
 import by.diplom.killer.vk.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
