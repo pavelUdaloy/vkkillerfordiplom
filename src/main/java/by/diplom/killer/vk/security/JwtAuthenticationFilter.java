@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static by.diplom.killer.vk.security.SecurityUtils.fillErrorResponse;
 
@@ -42,13 +43,28 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
+        String content = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+        if (filterByContentXss(content)) {
+            fillErrorResponse(response, HttpStatus.FORBIDDEN, "Sorry", "You can't attack by XSS this server");
+        }
+        if (filterByContentSql(content)) {
+            fillErrorResponse(response, HttpStatus.FORBIDDEN, "Sorry", "You can't attack with SQL injection this server");
+        }
         try {
             Authentication authentication = getAuthentication(request);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
         } catch (BaseKillerException e) {
-            fillErrorResponse(response, HttpStatus.UNAUTHORIZED, "sorry, unauthorized");
+            fillErrorResponse(response, HttpStatus.UNAUTHORIZED, "sorry", "unauthorized");
         }
+    }
+
+    private boolean filterByContentXss(String content) {
+        return content.contains("<script>");
+    }
+
+    private boolean filterByContentSql(String content) {
+        return content.contains(";");
     }
 
     private Authentication getAuthentication(HttpServletRequest request) {

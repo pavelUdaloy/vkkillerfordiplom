@@ -17,8 +17,9 @@ public final class SecurityUtils {
     private SecurityUtils() {
     }
 
-    public static void fillErrorResponse(HttpServletResponse response, HttpStatus status, String message) {
+    public static void fillErrorResponse(HttpServletResponse response, HttpStatus status, String title, String message) {
         ErrorDto errorDto = new ErrorDto();
+        errorDto.setTitle(title);
         errorDto.setMessage(message);
 
         response.setStatus(status.value());
