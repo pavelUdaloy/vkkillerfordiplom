@@ -50,6 +50,9 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         if (filterByContentSql(content)) {
             fillErrorResponse(response, HttpStatus.FORBIDDEN, "Sorry", "You can't attack with SQL injection this server");
         }
+        if (filterByContentSsi(content)) {
+            fillErrorResponse(response, HttpStatus.FORBIDDEN, "Sorry", "You can't attack with SSI injection this server");
+        }
         try {
             Authentication authentication = getAuthentication(request);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -65,6 +68,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     private boolean filterByContentSql(String content) {
         return content.contains(";");
+    }
+
+    private boolean filterByContentSsi(String content) {
+        return content.contains("echo");
     }
 
     private Authentication getAuthentication(HttpServletRequest request) {
